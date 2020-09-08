@@ -6,7 +6,7 @@ commands:
       - checkout
 
       - run: bundle install --path vendor/bundle
-        -
+
       - save_cache:
           name: Store bundle cache
           key: {{ checksum "Gemfile.lock" }}
