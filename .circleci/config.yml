@@ -8,19 +8,19 @@ executors:
     working_directory: ~/comm-service
     docker:
       - image: circleci/ruby:2.6.6
-    environment:
-      BUNDLE_JOBS: 3
-      BUNDLE_PATH: vendor/bundle
-      BUNDLE_RETRY: 3
-      BUNDLER_VERSION: 2.0.1
-      RAILS_ENV: test
-      DB_HOST: 127.0.0.1
-      PG_HOST: 127.0.0.1
-      PGUSER: com_service_user
-                - image: circleci/postgres:11.0
-                environment:
-                  POSTGRES_DB: com_service_test
-                  POSTGRES_USER: com_service_user
+        environment:
+          BUNDLE_JOBS: 3
+          BUNDLE_PATH: vendor/bundle
+          BUNDLE_RETRY: 3
+          BUNDLER_VERSION: 2.0.1
+          RAILS_ENV: test
+          DB_HOST: 127.0.0.1
+          PG_HOST: 127.0.0.1
+          PGUSER: com_service_user
+      - image: circleci/postgres:11.0
+        environment:
+          POSTGRES_DB: com_service_test
+          POSTGRES_USER: com_service_user
 
 commands:
   configure_bundler:
