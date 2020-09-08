@@ -5,16 +5,14 @@ commands:
     steps:
       - checkout
 
+      - run: bundle install --path vendor/bundle
+        -
+      - save_cache:
+          name: Store bundle cache
+          key: {{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
 
-    - run: bundle install --path vendor/bundle
+      - run: dockerize -wait tcp://localhost:5432 -timeout 1m
 
-    - save_cache:
-        name: Store bundle cache
-        key: {{ checksum "Gemfile.lock" }}
-        paths:
-          - vendor/bundle
-
-    - run: dockerize -wait tcp://localhost:5432 -timeout 1m
-
-
-    - run: bundle exec rake db:setup
+      - run: bundle exec rake db:setup
