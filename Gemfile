@@ -16,6 +16,7 @@ gem 'oj'
 gem 'liquid', '~> 4.0', '>= 4.0.3'
 gem 'omniauth-auth0', '~> 2.2'
 gem 'omniauth-rails_csrf_protection', '~> 0.1'
+gem 'racecar'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
