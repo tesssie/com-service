@@ -19,7 +19,6 @@ executors:
           PGUSER: comm_service_user
       - image: circleci/postgres:11
         environment:
-          POSTGRES_DB: comm_service_test
           POSTGRES_USER: comm_service_user
           POSTGRES_PASSWORD: postgres
 
