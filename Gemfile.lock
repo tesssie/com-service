@@ -87,6 +87,7 @@ GEM
     i18n (1.8.5)
       concurrent-ruby (~> 1.0)
     jwt (2.2.2)
+    king_konf (0.3.7)
     liquid (4.0.3)
     listen (3.2.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
@@ -136,6 +137,9 @@ GEM
       pry (>= 0.10.4)
     puma (4.3.6)
       nio4r (~> 2.0)
+    racecar (2.0.0)
+      king_konf (~> 0.3.7)
+      rdkafka (~> 0.8.0.beta.1)
     rack (2.2.3)
     rack-cors (1.0.3)
     rack-test (1.1.0)
@@ -170,6 +174,10 @@ GEM
     rb-fsevent (0.10.4)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
+    rdkafka (0.8.0)
+      ffi (~> 1.9)
+      mini_portile2 (~> 2.1)
+      rake (>= 12.3)
     recipient_interceptor (0.2.0)
       mail
     rspec (3.9.0)
@@ -243,6 +251,7 @@ DEPENDENCIES
   pg (>= 0.18, < 2.0)
   pry-rails
   puma (~> 4.1)
+  racecar
   rack-cors
   rails (~> 6.0.3, >= 6.0.3.2)
   recipient_interceptor
