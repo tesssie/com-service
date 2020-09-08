@@ -16,11 +16,11 @@ executors:
           RAILS_ENV: test
           DB_HOST: 127.0.0.1
           PG_HOST: 127.0.0.1
-          PGUSER: com_service_user
+          PGUSER: comm_service_user
       - image: circleci/postgres:11.0
         environment:
-          POSTGRES_DB: com_service_test
-          POSTGRES_USER: com_service_user
+          POSTGRES_DB: comm_service_test
+          POSTGRES_USER: comm_service_user
 
 commands:
   configure_bundler:
