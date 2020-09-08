@@ -1,0 +1,20 @@
+version: 2.1
+
+commands:
+  shared_steps:
+    steps:
+      - checkout
+
+
+    - run: bundle install --path vendor/bundle
+
+    - save_cache:
+        name: Store bundle cache
+        key: {{ checksum "Gemfile.lock" }}
+        paths:
+          - vendor/bundle
+
+    - run: dockerize -wait tcp://localhost:5432 -timeout 1m
+
+
+    - run: bundle exec rake db:setup
