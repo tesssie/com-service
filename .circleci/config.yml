@@ -21,6 +21,7 @@ executors:
         environment:
           POSTGRES_DB: comm_service_test
           POSTGRES_USER: comm_service_user
+          POSTGRES_PASSWORD: postgres
 
 commands:
   configure_bundler:
