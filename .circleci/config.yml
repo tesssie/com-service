@@ -1,18 +1,68 @@
 version: 2.1
 
+aliases:
+  - &defaults
+
+executors:
+  default:
+    working_directory: ~/comm-service
+    docker:
+      - image: circleci/ruby:2.6.6
+    environment:
+      BUNDLE_JOBS: 3
+      BUNDLE_PATH: vendor/bundle
+      BUNDLE_RETRY: 3
+      BUNDLER_VERSION: 2.0.1
+      RAILS_ENV: test
+      DB_HOST: 127.0.0.1
+      PG_HOST: 127.0.0.1
+      PGUSER: com_service_user
+                - image: circleci/postgres:11.0
+                environment:
+                  POSTGRES_DB: com_service_test
+                  POSTGRES_USER: com_service_user
+
 commands:
-  shared_steps:
+  configure_bundler:
+    description: Configure bundler
+    steps:
+      - run:
+          name: Configure bundler
+          command: |
+            echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
+            source $BASH_ENV
+            gem install bundler
+
+jobs:
+  build:
+    executor: default
     steps:
       - checkout
-
-      - run: bundle install --path vendor/bundle
-
+      - restore_cache:
+          keys:
+            - comm_service-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+            - comm_service-
+      - configure_bundler
+      - run:
+          name: Install bundle
+          command: bundle install
+      - run:
+          name: Wait for DB
+          command: dockerize -wait tcp://127.0.0.1:3306 -timeout 1m
+      - run:
+          name: Setup DB
+          command: bundle exec rails db:create db:schema:load --trace
       - save_cache:
-          name: Store bundle cache
-          key: {{ checksum "Gemfile.lock" }}
+          key: comm_service-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - ./comm_service
 
-      - run: dockerize -wait tcp://localhost:5432 -timeout 1m
-
-      - run: bundle exec rake db:setup
+workflows:
+  version: 2
+  integration:
+    jobs:
+      - build
