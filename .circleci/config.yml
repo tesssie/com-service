@@ -5,7 +5,7 @@ aliases:
 
 executors:
   default:
-    working_directory: ~/comm-service
+    working_directory: ~/comm_service
     docker:
       - image: circleci/ruby:2.6.6
         environment:
